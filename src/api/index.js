@@ -1,6 +1,6 @@
-const express = require('express');
-
-const emojis = require('./emojis');
+import express from 'express';
+import emojiRouter from './emojis.js';
+import dbConnectionSingleton from '../db-connection-singleton.js';
 
 const router = express.Router();
 
@@ -10,6 +10,17 @@ router.get('/', (req, res) => {
   });
 });
 
-router.use('/emojis', emojis);
+router.post('/query', async (request, response) => {
+  const { body } = request;
+  try {
+    const [rows, fields] = await dbConnectionSingleton.connection.execute(body.query ?? '');
+    return response.status(200).json({ rows });
+  } catch (error) {
+    console.log({ error });
+    return response.status(400).json(error.message);
+  }
+})
 
-module.exports = router;
+router.use('/emojis', emojiRouter);
+
+export default router;
