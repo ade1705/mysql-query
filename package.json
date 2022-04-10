@@ -23,7 +23,9 @@
     "express": "^4.17.1",
     "helmet": "^4.6.0",
     "morgan": "^1.10.0",
-    "mysql2": "^2.3.3"
+    "mysql2": "^2.3.3",
+    "sqlite": "^4.0.25",
+    "sqlite3": "^5.0.2"
   },
   "devDependencies": {
     "eslint": "^7.28.0",

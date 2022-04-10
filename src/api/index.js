@@ -13,10 +13,9 @@ router.get('/', (req, res) => {
 router.post('/query', async (request, response) => {
   const { body } = request;
   try {
-    const [rows, fields] = await dbConnectionSingleton.connection.execute(body.query ?? '');
-    return response.status(200).json({ rows });
+    const data = await dbConnectionSingleton.connection.all(body.query ?? '');
+    return response.status(200).json(data);
   } catch (error) {
-    console.log({ error });
     return response.status(400).json(error.message);
   }
 })
